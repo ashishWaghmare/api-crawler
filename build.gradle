@@ -16,7 +16,6 @@ dependencies {
 
 jar {
     from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }) {
-        exclude "META-INF/*.RSA"
     }
     manifest {
         attributes 'Main-Class': 'in.waghmare.HTTPClient'
