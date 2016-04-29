@@ -1,11 +1,21 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
-apply plugin: 'application'
+apply plugin: 'gradle-one-jar'
 
 repositories {
     jcenter()
 }
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+
 
 dependencies {
     // The production code uses the SLF4J logging API at compile time
@@ -14,12 +24,10 @@ dependencies {
     testCompile "junit:junit:4.11"
 }
 
-jar {
-    from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }) {
-    }
-    manifest {
-        attributes 'Main-Class': 'in.waghmare.HTTPClient'
-    }
+task fatJar(type: OneJar) {
+    mainClass = 'in.waghmare.HTTPClient'
 }
+
+
 
 
